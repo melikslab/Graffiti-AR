@@ -3,7 +3,6 @@ const NativeUI = require('NativeUI');
 const Textures = require('Textures');
 const Patches = require('Patches');
 
-
 const index = 0;
 
 // Create a configuration object
@@ -33,37 +32,21 @@ picker.selectedIndex.monitor().subscribe(function(val) {
   //It is a number, so we are using a "Scalar" type of value.
   //The name of the variable that will appear in the patch editor is "colorPick"
 
-  //We pass the value of the picked item
+  //Pass the value of the picked item
   //to the "colorPick" variable inside of the "Variables From Script" patch.
   Patches.setScalarValue("colorPick", val.newValue);
 });
 
 
 //Slider
-const Reactive = require('Reactive');
-const CameraInfo = require('CameraInfo');
-
 var slider = NativeUI.slider;
-/*var initialValue = 0.32;
-NativeUI.slider.value = initialValue;
-
-if(Reactive.or(CameraInfo.isRecordingVideo, CameraInfo.isCapturingPhoto)){
-    slider.visible = false;
-}
-slider.visible = true;
-
-slider.value.monitor().subscribe(function(val) {
-    Patches.setScalarValue("sliderValue", val.newValue);
-});
-*/
 var lastSliderValue = 0.35;
+//Init value
 Patches.setScalarValue("sliderValue", lastSliderValue);
 
 slider.value.monitor({fireOnInitialValue: false}).subscribe(function(val) {
     lastSliderValue = val.newValue;
-    
-    let sliderData = { 'sliderVal': lastSliderValue };
-
+    //Pass the value
     Patches.setScalarValue("sliderValue", val.newValue);
   });
   
@@ -78,3 +61,6 @@ slider.value.monitor({fireOnInitialValue: false}).subscribe(function(val) {
   }
   
   init();
+
+
+  //Credits to Luke Hurd for publish demos of native ui in the facebook comunity.
